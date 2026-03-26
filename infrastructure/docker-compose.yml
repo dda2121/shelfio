@@ -1,6 +1,6 @@
 services:
   redis:
-    image: redis:latest
+    image: redis:8.6.2
     command: redis-server --save 20 1 --loglevel warning --requirepass admin
     ports:
       - "6379:6379"
@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
 
   keycloak:
-    image: quay.io/keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:26.5
     container_name: keycloak
     environment:
       KEYCLOAK_ADMIN: admin
