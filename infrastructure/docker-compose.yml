@@ -1,0 +1,30 @@
+services:
+  redis:
+    image: redis:latest
+    command: redis-server --save 20 1 --loglevel warning --requirepass admin
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+    restart: unless-stopped
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin123
+    command:
+      - start-dev
+      - --import-realm
+    ports:
+      - "9000:8080"
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+      - ./keycloak/realm-config.json:/opt/keycloak/data/import/realm-config.json
+    restart: unless-stopped
+
+volumes:
+  keycloak_data:
+  redis:
+    driver: local

@@ -1,0 +1,18 @@
+{
+  "realm": "shelfio",
+  "enabled": true,
+  "registrationAllowed": true,
+  "loginTheme": "keycloak",
+  "resetPasswordAllowed": true,
+
+  "clients": [
+    {
+      "clientId": "shelfio",
+      "publicClient": false,
+      "secret": "POJfUl8q1B3FR6cCphu2XYYDLn2FDJhF",
+      "directAccessGrantsEnabled": true,
+      "redirectUris": ["*"],
+      "webOrigins": ["*"]
+    }
+  ]
+}
