@@ -16,7 +16,7 @@ spring:
     store-type: redis
     timeout: 30m
     redis:
-      namespace: shelfio:bff:session
+      namespace: shelfio:gateway:session
 
   data:
     redis:

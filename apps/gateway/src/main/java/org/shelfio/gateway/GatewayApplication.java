@@ -1,13 +1,13 @@
-package org.shelfio.bff;
+package org.shelfio.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BffApplication {
+public class GatewayApplication {
 
     static void main(String[] args) {
-        SpringApplication.run(BffApplication.class, args);
+        SpringApplication.run(GatewayApplication.class, args);
     }
 
 }
