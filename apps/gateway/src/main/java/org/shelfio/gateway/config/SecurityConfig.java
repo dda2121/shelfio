@@ -1,4 +1,4 @@
-package org.shelfio.bff.config;
+package org.shelfio.gateway.config;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
