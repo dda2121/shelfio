@@ -24,6 +24,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 
+    implementation 'io.swagger.core.v3:swagger-annotations:2.2.46'
+    implementation 'jakarta.validation:jakarta.validation-api:3.1.1'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.10'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
@@ -41,8 +45,6 @@ openApiGenerate {
             library              : "spring-boot",
             interfaceOnly        : "true",
             useTags              : "true",
-            useBeanValidation    : "true",
-            performBeanValidation: "true",
             useJakartaEe         : "true",
             dateLibrary          : "java8",
             serializableModel    : "true"
@@ -51,4 +53,16 @@ openApiGenerate {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir layout.buildDirectory.dir("generated/openapi/src/main/java")
+        }
+    }
+}
+
+tasks.named('compileJava') {
+    dependsOn tasks.named('openApiGenerate')
 }
