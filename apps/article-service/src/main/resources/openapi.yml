@@ -9,6 +9,9 @@ servers:
   - url: http://localhost:8081/api/v1/
     description: Local development server
 
+security:
+  - bearerAuth: [ ]
+
 paths:
   "/groups":
     post:
@@ -36,7 +39,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
-          description: Int server error
+          description: Internal server error
           content:
             application/json:
               schema:
@@ -57,7 +60,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/GroupPreviewResponse'
         '500':
-          description: Int server error
+          description: Internal server error
           content:
             application/json:
               schema:
@@ -97,7 +100,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
-          description: Int server error
+          description: Internal server error
           content:
             application/json:
               schema:
@@ -142,7 +145,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
-          description: Int server error
+          description: Internal server error
           content:
             application/json:
               schema:
@@ -175,7 +178,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
-          description: Int server error
+          description: Internal server error
           content:
             application/json:
               schema:
@@ -196,7 +199,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/ArticlePreviewResponse'
         '500':
-          description: Int server error
+          description: Internal server error
           content:
             application/json:
               schema:
@@ -236,7 +239,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
-          description: Int server error
+          description: Internal server error
           content:
             application/json:
               schema:
@@ -281,7 +284,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
-          description: Int server error
+          description: Internal server error
           content:
             application/json:
               schema:
@@ -289,6 +292,12 @@ paths:
 
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
   schemas:
     ### --------- COMMON SCHEMAS --------- ###
     ErrorResponse:
@@ -517,8 +526,7 @@ components:
           type: string
           description: The new URI of the article
         groupId:
-          type:
-            - integer
+          type: integer
           format: int64
           description: The new group ID to which the article should belong
           nullable: true
