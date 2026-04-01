@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '4.0.3'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.openapi.generator' version "7.21.0"
 }
 
 group = 'org.shelfio'
@@ -23,12 +24,45 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 
+    implementation 'io.swagger.core.v3:swagger-annotations:2.2.46'
+    implementation 'jakarta.validation:jakarta.validation-api:3.1.1'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.10'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = file("${projectDir}/src/main/resources/openapi.yml").absolutePath
+    outputDir = layout.buildDirectory.dir("generated/openapi").get().asFile.absolutePath
+    apiPackage = "org.shelfio.article.api"
+    modelPackage = "org.shelfio.article.model"
+
+    configOptions = [
+            library              : "spring-boot",
+            interfaceOnly        : "true",
+            useTags              : "true",
+            useJakartaEe         : "true",
+            dateLibrary          : "java8",
+            serializableModel    : "true"
+    ]
+}
+
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir layout.buildDirectory.dir("generated/openapi/src/main/java")
+        }
+    }
+}
+
+tasks.named('compileJava') {
+    dependsOn tasks.named('openApiGenerate')
 }
